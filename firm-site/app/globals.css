@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@theme {
+  /* Hero stacking order: footage 10 < scrim 20 < copy 30 < panels 35 < chrome 40 */
+  --z-panel: 35;
+
+  /* Palette sampled from the hero footage itself (median accent hue 203°)
+     so the film and the UI read as one material. */
+  --color-base: #F7F9FB;
+  --color-surface: #E8EDF2;
+  --color-ink: #0E1620;
+  --color-muted: #6B7A8C;
+  --color-accent: #2E5F8A;
+  --color-deep: #16324C;
+
+  --font-display: var(--font-cabinet), "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-switzer), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-pill: 999px;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-base);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    font-weight: 400;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+  }
+
+  h1 {
+    font-size: clamp(2.75rem, 7vw, 5.5rem);
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-base);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Stats bar notch for the accent medallion */
+.notch {
+  mask: radial-gradient(circle 58px at 50% 100%, transparent 98%, #000 100%);
+  -webkit-mask: radial-gradient(circle 58px at 50% 100%, transparent 98%, #000 100%);
+}
+
+@media (max-width: 767px) {
+  .notch {
+    mask: radial-gradient(circle 50px at 50% 100%, transparent 98%, #000 100%);
+    -webkit-mask: radial-gradient(circle 50px at 50% 100%, transparent 98%, #000 100%);
+  }
+}
+
+.word {
+  display: inline-block;
+  white-space: pre;
+}
+
+/* Panels are stacked and cross-faded, so they must not catch clicks or
+   keyboard focus while they are the hidden one. */
+.hero-panels {
+  z-index: var(--z-panel);
+}
+
+.panel-hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
